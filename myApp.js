@@ -4,9 +4,11 @@ var app = express();
 console.log('Hello World')
 
 app.get('/',(req,res)=>{
-    res.send('response string')
+    res.sendFile(__dirname+'/views/index.html')
 })
-
+app.post('/name',(req,res)=>{
+    res.send('name')
+})
 app.listen(5000)
     
 
