@@ -1,7 +1,14 @@
 var express = require('express');
 var app = express();
-
+var bodyParser=require("body-parser")
 console.log('Hello World')
+
+
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+
+
 app.get(
     "/now",
     (req, res, next) => {
@@ -40,8 +47,19 @@ app.get('/json',(req,res)=>{
     res.json({"message": "Hello json"})
     }
 })
-app.post('/name',(req,res)=>{
-    res.send(req)
+app.route('/name')
+.post((req,res)=>{
+    res.send(req.body)
+    
+ 
+})
+.get((req,res)=>{
+    res.send(req.query)
+    res.json(
+        {'first name': req.query.firstname,
+        "last name":req.query.lastname
+    }
+    )
 })
 
 app.get('/echo/:word/:bool',(req,res,next)=>{
@@ -55,9 +73,7 @@ app.get('/echo/:word/:bool',(req,res,next)=>{
             "date":req.date,
             "text": req.text})
 })
-app.get('/name?first=firstname&last=lastname',(req,res)=>{
 
-})
 app.listen(5000)
     
 
